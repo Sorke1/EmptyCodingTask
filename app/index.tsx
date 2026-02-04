@@ -1,87 +1,82 @@
-import { useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
-
-type EventCardProps = {
-  title: string;
-  icon: string;
-};
+import { CSSProperties } from "react";
 
 export default function App() {
-  const events: { title: string; icon: string }[] = [];
-  events.push({ title: "Feier", icon: "🎉" });
-  events.push({ title: "Football", icon: "🏈" });
-  events.push({ title: "Nachtisch", icon: "🍨" });
-  events.push({ title: "Halloween", icon: "🎃" });
-  events.push({ title: "Werkstatt", icon: "🪚" });
+  const events = [
+    { title: "Feier", icon: "🎉" },
+    { title: "Football", icon: "🏈" },
+    { title: "Nachtisch", icon: "🍨" },
+    { title: "Halloween", icon: "🎃" },
+    { title: "Werkstatt", icon: "🪚" },
+  ];
   return (
-    <View style={styles.column}>
+    <div style={styles.column}>
       {events.map((event) => (
-          <EventCard key={event.title} title={event.title} icon={event.icon} />
+        <EventCard key={event.title} title={event.title} icon={event.icon} />
       ))}
-    </View>
+    </div>
   );
 }
 
-function EventCard({ title, icon }: EventCardProps) {
-  const [layout, setLayout] = useState({ width: 0, height: 0 });
-  const circleSize = Math.max(0, layout.height - 24);
-
+function EventCard({ title, icon }: { title: string; icon: string }) {
   return (
-    <View
-      style={styles.container}
-      onLayout={(e) => setLayout(e.nativeEvent.layout)}>
-      <View style={[styles.iconCircle, { width: circleSize, height: circleSize }]}>
-          <Text style={{ fontSize: circleSize * 0.6 }}>
-              {icon}
-          </Text>
-      </View>
-          <View style={styles.textWrapper}>
-              <Text style={styles.title}>{title}</Text>
-          </View>
-    </View>
+    <div style={styles.container}>
+      <div style={styles.iconCircle}>
+        <span style={styles.emojiIcon}>{icon}</span>
+      </div>
+      <div style={styles.textWrapper}>
+        <span style={styles.title}>{title}</span>
+      </div>
+    </div>
   );
 }
 
-const styles = StyleSheet.create({
+const styles: { [key: string]: CSSProperties } = {
   column: {
     width: "25%",
     height: "90%",
     marginTop: 24,
     padding: 32,
     gap: 12,
+    display: "flex",
     flexDirection: "column",
     alignSelf: "center",
     borderRadius: 12,
     overflow: "hidden",
     backgroundColor: "#191F27",
-},
-  container: {
-    minWidth: 90,
-    borderRadius: 16,
-    padding: 10,
-    flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",           
-    alignContent: "center",     
-    justifyContent: "center",   
-    alignItems: "center",
-    backgroundColor: "#7B61FF",
   },
+  container: {
+    borderRadius: 16,
+    display: "flex",
+    flex: 1, 
+    flexWrap: "wrap",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "5%",
+    backgroundColor: "#7B61FF",
+   },
   iconCircle: {
-    aspectRatio: 1,            
-    borderRadius: 999,           
+    display: "flex",
+    height: "80%", 
+    aspectRatio: "1 / 1", 
+    borderRadius: "50%",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "white",
-   },
+    containerType: "size", 
+  },
+  emojiIcon: { 
+    fontSize: "65cqmin", 
+    lineHeight: 1,
+  },
   textWrapper: {
     width: "65%",
     justifyContent: "center",
     alignItems: "center",
-    },
+    display: "flex",
+  },
   title: {
     fontWeight: "bold",
-    fontSize: 16,
-    color: "white",
-  },
-});
+    fontSize: 16,   
+  }
+};
